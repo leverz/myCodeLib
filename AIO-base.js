@@ -49,3 +49,50 @@ function convertToArray(nodes){
 	}
 	return array;
 }
+
+
+
+
+/*
+ *很多时候js要在DOM结构加载完成之后，执行一些操作。
+ *而常见的window.onload,只会在页面的所有内容都加载完成之后才会被触发。
+ *这样的话，如果我们有大量图片要加载，window.onload就会等待很久才会执行。
+ *
+ *因此，我们需要有一个DOM Ready事件。
+ *现代浏览器已经支持了DOMContentLoaded事件，但我们还是得处理一下那些老旧的浏览器。
+ *
+ * 在jQuery中，DOM Ready事件有三种用法：
+ * 1.$(document).ready(function(){	//handler 	});
+ * 2.$(function(){	//handler 	});
+ * 3.$().ready(function(){	//handler 	});
+ */
+
+
+/*
+ *动态加载外部JavaScript脚本
+ *eg:动态加载user_agent_test.js文件。
+ *		loadScript('user_agent_test');
+ */
+function loadScript(url){
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = url;
+	document.body.appendChild(script);
+}
+
+/*
+ *动态加载行内JavaScript脚本
+ *eg: loadScriptString('function sayHi(){alert("hi");}');
+ *
+ * code中的代码会在全局作用域中执行，跟eval()函数的作用是一样的。
+ */
+function loadScriptString(code){
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	try{
+		script.appendChild(document.createTextNode(code));
+	}catch(ex){
+		script.text = code;
+	}
+	document.body.appendChild(script);
+}

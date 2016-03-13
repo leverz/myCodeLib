@@ -3,3 +3,4 @@
 1.获取url参数————getQueryStringArgs();
 2.用户代理检测函数————client();
 3.NodeList对象转换为数组函数
+4.动态加载JavaScript。————loadScript,loadScriptString

@@ -92,7 +92,39 @@ function loadScriptString(code){
 	try{
 		script.appendChild(document.createTextNode(code));
 	}catch(ex){
-		script.text = code;
+		script.text = code;//IE中把script标签当做了一个特殊的标签，不允许插入子元素，但可以通过text属性向其中添加内容。
 	}
 	document.body.appendChild(script);
+}
+
+/*
+ *动态加载外部CSS文件
+ *eg:动态加载style.css文件。
+ *		loadStyles('style');
+ */
+function loadStyles(url){
+	var link = document.createElement('link');
+	link.rel = "stylesheet";
+	link.type = "text/css";
+	link.href = url;
+	var head = document.getElementByTagName("head")[0];
+	head.appendChild(link);
+}
+
+/*
+ *动态加载嵌入式CSS
+ *eg: loadStyleString('body{background-color:red;}');
+ */
+
+function loadStyleString = function (css) {
+	// body...
+	var style = document.createElement('style');
+	style.type = "text/css";
+	try{
+		style.appendChild(document.createTextNode(css));
+	}catch(ex){
+		style.styleSheet.cssText = css;//IE中style标签同script标签一样，不能直接插入子元素，但是可以通过为styleSheet.cssText赋值来实现。
+	}
+	var head = document.getElementByTagName('head')[0];
+	head.appendChild(style);
 }

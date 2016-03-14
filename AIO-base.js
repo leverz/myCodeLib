@@ -128,3 +128,24 @@ function loadStyleString = function (css) {
 	var head = document.getElementByTagName('head')[0];
 	head.appendChild(style);
 }
+
+/*
+ *遍历元素的子元素
+ */
+function processChild(element,callback){
+	var i,len,child = element.firstChild;
+	while(child != element.lastChild){
+		if(child.nodeType == 1){
+			callback && callback(child);//检查是不是元素，以应对除IE外空白元素不会返回文本节点的情况。
+		}
+		child = child.nextSibling;
+	}
+}
+function newProcessChild(element,callback){
+	var i,len,child = element.firstChild;
+	while(child != element.lastElementChild){
+		callback && callback(child);
+	}
+	child = child.nextElementSibling;
+	// 只返回元素节点，不存在空白元素也当做子节点的情况。支持IE9+。
+}

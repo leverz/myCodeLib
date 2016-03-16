@@ -149,3 +149,38 @@ function newProcessChild(element,callback){
 	child = child.nextElementSibling;
 	// 只返回元素节点，不存在空白元素也当做子节点的情况。支持IE9+。
 }
+
+/*
+ *在操作类名时，需要通过className属性添加、删除和替换类名。
+ *因为className中是一个字符串，所以即使只修改字符串的一部分，也必须每次
+ *都设置整个字符串的值。
+ */
+function classNameToArray(element){
+	var className = element.className.split(/\s+/);
+	return className;
+}
+function removeClass = function(element,className){
+	var pos = -1,i,len;
+	var classNames = classNameToArray(element);
+	for(i = 0, len = classNames.length; i < len; i++){
+		if (classNames[i] === className){
+			pos = i;
+			break;
+		}
+	}
+	classNames.splice(i,1);
+	element.className = classNames.join(" ");
+}
+function addClass = function(element,className){
+	element.className += ' '+className;
+}
+function replaceClass = function(element,replaceClass,className){
+	var classNames = classNameToArray(element);
+	var i,len;
+	for(i = 0, len = classNames.length; i < len; i++){
+		if(classNames[i] === replaceClass){
+			className[i] = className;
+			break;
+		}
+	}
+}

@@ -184,3 +184,42 @@ function replaceClass = function(element,replaceClass,className){
 		}
 	}
 }
+
+/*
+ *判断某个节点是不是另一个节点的后代
+ */
+function contains(refNode, otherNode){
+	if(typeof refNode.contains == 'function' && (!client.engine.webkit || client.engine.webkit >= 522)){ //webkit版本号小于522的Safari浏览器中，contains方法不能正常使用。
+		return refNode.contains(otherNode);
+	}else if(typeof refNode.compareDocumentPostion == "function"){
+		return !!(refNode.compareDocumentPostion(otherNode) & 16)
+	}else{
+		var node = otherNode.parentNode;
+		do{
+			if(node === refNode){
+				return true;
+			}else{
+				node = node.parentNode;
+			}
+		} while (node !== null); //文档树的顶端，parentNode值为null
+		return false;
+	}
+}
+
+/*
+ *根据浏览器检测使用哪个方法来实现innerText的功能
+ *这里需要解释一下innerText和textContent的差别：
+ *innerText会忽略行内样式和脚本，而textContent会返回行内的样式和脚本。
+ *所以，不要写行内样式和脚本！！！
+ */
+function getInnerText(element){
+	return (typeof element.textContent == 'String') ? element.textContent : element.innerText;
+}
+
+function setInnerText(element, text){
+	if (typeof element.textContent == 'String'){
+		element.textContent = text;
+	}else{
+		element.innerText = text;
+	}
+}

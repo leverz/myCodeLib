@@ -10,4 +10,5 @@
 7.处理className（添加，删除，替换）————classNameToArray,removeClass,addClass,replaceClass;<br/>
 8.判断某个节点是不是另一个节点的后代————contains<br/>
 9.根据浏览器检测使用哪个方法来实现innerText的功能————getInnerText，setInnerText<br/>
-10.获取某个页面上的偏移量————getElementLeft,getElementTop
+10.获取某个页面上的偏移量————getElementLeft,getElementTop<br/>
+11.获取客户区的大小————getViewport

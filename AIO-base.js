@@ -250,3 +250,20 @@ function getElementTop(element){
 
 	return actualTop;
 }
+
+/*
+ * 获取客户区的大小（content+padding）
+ */
+function getViewport(){
+	if(document.compatMode == 'BackCompat'){
+		return {
+			width: document.body.clientWidth,
+			height: document.body.clientHeight
+		};
+	} else{
+		return {
+			width: document.documentElement.clientWidth,
+			height: document.documentElement.clientHeight
+		};
+	}
+}

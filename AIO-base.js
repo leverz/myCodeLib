@@ -267,3 +267,47 @@ function getViewport(){
 		};
 	}
 }
+
+/*
+ *滚动大小：
+ *scrollHeight-->在没有滚动条的情况下，元素内容的总高度。(所有内容的高度)
+ *scrollWidth-->在没有滚动条的情况下，元素内容的总宽度。（所有内容的宽度）
+ *scrollLeft-->被隐藏在内容区左侧的像素数。
+ *scrollTop-->被隐藏在内容区上方的像素数。
+ *其中,可以通过设置scrollLeft和scrollTop的值，来改变元素的滚动位置
+ */
+
+function getBoundingClientRect(element){
+	var scrollTop = document.documentElement.scrollTop;
+	var scrollLeft = document.documentElement.scrollLeft;
+
+	if(element.getBoundingClientRect){
+		if(typeof arguments.callee.offset != 'number'){
+			var temp = document.createElement('div');
+			temp.style.cssText = 'position:absolute;left:0;top:0;';
+			document.body.appendChild(temp);
+			arguments.callee.offset = -temp.getBoundingClientRect().top - scrollTop;
+			document.body.removeChild(temp);
+			temp = null;
+		}
+		var rect = element.getBoundingClientRect();
+		var offset = arguments.callee.offset;
+
+		return {
+			left: rect.left + offset,
+			right: rect.right + offset,
+			top: rect.top + offset,
+			bottom: rect.bottom + offset
+		};
+	}else{
+		var actualLeft = getElementLeft(element);
+		var actualTop = getElementTop(element);
+
+		return{
+			left: actualLeft - scrollLeft,
+			right: actualLeft + element.offsetWidth - scrollLeft,
+			top: actualTop - scrollTop,
+			bottom: actualTop + element.offsetHeight - scrollTop
+		}
+	}
+}

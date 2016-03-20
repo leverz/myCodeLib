@@ -311,3 +311,24 @@ function getBoundingClientRect(element){
 		}
 	}
 }
+
+/*
+ *获取某个元素下的所有子元素
+ *NodeInterator用于遍历DOM结构
+ *可以使用createNodeIterator方法创建他的实例。
+ *这个方法接受四个参数：
+ *root————搜索起点
+ *whatToShow————要访问哪些节点的数字代码
+ *filter————过滤器
+ *entityReferenceExpansion————布尔值，表示是否要扩展实体引用。
+ */
+function getChildren(element){
+	var iterator = document.createNodeIterator(element, NodeFilter, SHOW_ELEMENT, null, false);
+	var node = iterator.nextNode();
+	var nodeList = [];
+	while(node !== null){
+		nodeList.push(node);
+		node = iterator.nextNode();
+	}
+	return nodeList;
+}

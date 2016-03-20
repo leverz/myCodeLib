@@ -12,3 +12,4 @@
 9.根据浏览器检测使用哪个方法来实现innerText的功能————getInnerText，setInnerText<br/>
 10.获取某个页面上的偏移量————getElementLeft,getElementTop<br/>
 11.获取客户区的大小————getViewport
+12.获取某个元素的所有子元素————getChildren

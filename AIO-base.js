@@ -391,6 +391,35 @@ var EventUtil = {
 		}else{
 			return null;
 		}
+	},
+	getButton: function(event){
+		//针对mousedown和mouseup事件
+		//检测MouseEvents这个特性，如果是IE就对它进行DOM操作规范化
+		//0==>主鼠标按钮，1==>鼠标滚轮按钮，2==>次鼠标按钮
+		if(document.implementation.hasFeature('MouseEvents', '2.0')){
+			return event.button;
+		}else{
+			switch(event.button){
+				case 0:
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+					return 0;
+				case 2:
+				case 6:
+					return 2;
+				case 4:
+					return 1;
+			}
+		}
+	}，
+	getWheelDelta: function(event){
+		if(event.wheelDelta){
+			return (client.engine.opera && client.engine.opera < 9.5 ? -event.wheelDelta : event.wheelDelta); //opera浏览器获得的值与别的浏览器相反
+		}else{
+			return -event.detail * 40;//firefox支持DOMMouseScroll事件，它的event对象中的滚轮信息存在detail中，向前滚动，其值为-3的倍数，向后滚动其值为3的倍数
+		}
 	}
 }
 

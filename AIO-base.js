@@ -380,9 +380,37 @@ var EventUtil = {
 		}else{
 			event.cancelBubble = true;
 		}
+	},
+	getRelatedTarget: function(event){
+		if(event.relatedTarget){
+			return event.relatedTarget;//mouseover和mouseout事件的event对象中保存着relatedTarget属性，来提供相关元素的信息。对mouseover来说，事件的主目标获得光标，而相关元素失去光标。mouseout是事件的主目标失去光标，而相关元素获得光标。
+		}else if(event.toElement){
+			return event.toElement;//IE中mouseout的event对象的toElement属性保存相关元素信息
+		}else if(event.fromElement){
+			return event.fromElement;//IE中的mouseover的event对象的fromElement属性保存着相关元素信息
+		}else{
+			return null;
+		}
 	}
 }
 
+//计算页面中获得事件的元素的页面坐标
+function getElementPagePosition(element,eventType){
+	var pageX,pageY;
+	EventUtil.addHandler(div, eventType, function(event){
+		event = EventUtil.getEvent(event);
+		pageX = event.pageX;
+		pageY = event.pageY;
+
+		if(pageX === undefined){
+			pageX = event.clientX + (document.body.scrollLeft || document.documentElement.scrollLeft);//混杂模式下识别document.body.scrollLeft,严格模式下识别document.documentElement
+		}
+
+		if(pageY === undefined){
+			pageY = event.clientY + (document.body.scrollTop || document.documentElement.scrollTop);
+		}
+	});
+}
 
 
 

@@ -334,8 +334,13 @@ function getChildren(element){
 }
 /*
  *通用的事件处理函数。
- *TODO: 没有对IE中attachEvent函数的作用域进行处理
- *addEventListener的使用会创建自己的作用域，而attachEvent的作用域依旧是window
+ * TODO: 没有对IE中attachEvent函数的作用域进行处理
+ * addEventListener的使用会创建自己的作用域，而attachEvent的作用域依旧是window
+ *
+ * update: 新增针对跨浏览器的事件对象处理。实现兼容多浏览器。
+ *
+ * 使用时，应该先用EventUtil.getEvent()函数获取Event对象
+ * 
  */
 var EventUtil = {
 	addHandler: function(element, type, handler){
@@ -354,6 +359,26 @@ var EventUtil = {
 			element.detachEvent('on' + type, handler);
 		}else{
 			element['on' + type] = null;
+		}
+	},
+	getEvent: function(event){
+		return event ? event : window.event;
+	},
+	getTarget: function(event){
+		return event.target || event.srcElement;
+	},
+	preventDefault: function(event){
+		if(event.preventDefault){
+			event.preventDefault();
+		}else{
+			event.returnValue = false;
+		}
+	},
+	stopPropagation: function(event){
+		if (event.stopPropagation) {
+			event.stopPropagation();
+		}else{
+			event.cancelBubble = true;
 		}
 	}
 }

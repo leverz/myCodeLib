@@ -332,3 +332,50 @@ function getChildren(element){
 	}
 	return nodeList;
 }
+/*
+ *通用的事件处理函数。
+ *TODO: 没有对IE中attachEvent函数的作用域进行处理
+ *addEventListener的使用会创建自己的作用域，而attachEvent的作用域依旧是window
+ */
+var EventUtil = {
+	addHandler: function(element, type, handler){
+		if(element.addEventListener){
+			element.addEventListener(type, handler, false);
+		}else if(element.attachEvent){
+			element.attachEvent('on' + type, handler);
+		}else{
+			element['on' + type] = handler;
+		}
+	},
+	removeHandler: function(element, type, handler){
+		if(element.removeEventListener){
+			element.removeEventListener(type, handler, false);
+		}else if(element.detachEvent){
+			element.detachEvent('on' + type, handler);
+		}else{
+			element['on' + type] = null;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

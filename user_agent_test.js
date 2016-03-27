@@ -2,7 +2,7 @@
  *用户代理字符串检测脚本，包括检测呈现引擎，平台，Windows操作系统，移动设备和游戏系统。
  */
 
-var client = function () {
+function client () {
 	// body...
 	// 呈现引擎
 	var engine = {
@@ -174,10 +174,10 @@ var client = function () {
 	system.ps = /playstation/i.test(ua);
 
 	// 返回这些对象
-	return {
+	var obj = {
 		engine: engine,
 		browser: browser,
 		system: system
-	};
-
-}();
+	}
+	return obj;
+};

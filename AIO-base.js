@@ -415,6 +415,10 @@ var EventUtil = {
 		}
 	}，
 	getWheelDelta: function(event){
+		// 针对mousewheel事件
+		// event对象中有个wheelDelta属性
+		// 用户向前滚动滚轮时，wheelDelta的值为120的倍数
+		// 向后滚动时，wheelDelta是-120的倍数
 		if(event.wheelDelta){
 			return (client.engine.opera && client.engine.opera < 9.5 ? -event.wheelDelta : event.wheelDelta); //opera浏览器获得的值与别的浏览器相反
 		}else{

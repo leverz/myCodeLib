@@ -424,6 +424,15 @@ var EventUtil = {
 		}else{
 			return -event.detail * 40;//firefox支持DOMMouseScroll事件，它的event对象中的滚轮信息存在detail中，向前滚动，其值为-3的倍数，向后滚动其值为3的倍数
 		}
+	},
+	getCharCode: function(event){
+		//取得按键所对应的字符编码
+		//补充：在取得了字符编码之后，可以使用String.fromCharCode()将其转换成实际的字符
+		if(typeof event.charCode == "number"){
+			return event.charCode;
+		}else{
+			return event.keyCode;
+		}
 	}
 }
 

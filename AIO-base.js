@@ -168,7 +168,7 @@ function removeClass = function(element,className){
 			break;
 		}
 	}
-	classNames.splice(i,1);
+	classNames.splice(pos,1);
 	element.className = classNames.join(" ");
 }
 function addClass = function(element,className){
@@ -454,7 +454,51 @@ function getElementPagePosition(element,eventType){
 	});
 }
 
+//异步获取数据
+function ajax(url,method,data,callback){
+	var xmlhttp;
 
+	if(window.XMLHttpRequest){
+		// IE7+
+		xmlhttp = new XMLHttpRequest();
+	}else{
+		xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+	}
+
+	xmlhttp.onreadystatechange = function(){
+		if(xmlhttp.readyState == XMLHttpRequest.DONE){
+			if(xmlhttp.status == 200){
+				var response = xmlhttp.response;
+				response = JSON.parse(response);
+				callback && callback(response);
+			}else if(xmlhttp.status == 400){
+				alert("网络出问题了");
+			}
+		}
+	};
+	if(data){
+		url = url + '?';
+		for(var key in data){
+			url += key + '=' + data[key] + '&';
+		}
+		url = url.substring(0,url.length-1);
+	}
+	xmlhttp.open(method,url,true);
+	xmlhttp.send();
+}
+
+/*
+ * 获取选择的文本
+ * textbox参数表示当前用户所选中的输入框
+ * 
+ */
+function getSelectedText(textbox){
+	if(typeof textbox.selectionStart == 'number'){
+		return textbox.value.substring(textbox.selectionStart,textbox.selectionEnd);
+	}else if(document.selection){
+		return document.selection.createRange().text;
+	}
+}
 
 
 

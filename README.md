@@ -13,4 +13,6 @@
 10.获取某个页面上的偏移量————getElementLeft,getElementTop<br/>
 11.获取客户区的大小————getViewport<br/>
 12.获取某个元素的所有子元素————getChildren<br/>
-13.事件处理程序EventUtil
+13.事件处理程序EventUtil<br/>
+14.异步获取数据方法----ajax<br/>
+15.获取选中文本的方法----getSelectedText

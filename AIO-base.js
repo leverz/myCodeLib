@@ -436,6 +436,19 @@ var EventUtil = {
 		}else{
 			return event.keyCode;
 		}
+	},
+	getClipboardText: function(event){
+		//获取剪贴板内容
+		var clipboardData = (event.clipboardData || window.clipboardData);
+		return clipboardData.getData('text');
+	},
+	setClipboardText: function(event, value){
+		//设置剪贴板内容
+		if(event.clipboardData){
+			return event.clipboardData.setData('text/plain', value);
+		}else if(window.clipboardData){
+			return window.clipboardData.setData('text', value);
+		}
 	}
 }
 

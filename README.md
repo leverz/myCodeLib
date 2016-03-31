@@ -15,4 +15,5 @@
 12.获取某个元素的所有子元素————getChildren<br/>
 13.事件处理程序EventUtil<br/>
 14.异步获取数据方法----ajax<br/>
-15.获取选中文本的方法----getSelectedText
+15.获取选中文本的方法----getSelectedText<br/>
+16.选中特定文本----selectText

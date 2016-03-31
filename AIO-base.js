@@ -160,6 +160,7 @@ function classNameToArray(element){
 	return className;
 }
 function removeClass = function(element,className){
+	//BUG:如果没有这个class，会直接删除最后一个class
 	var pos = -1,i,len;
 	var classNames = classNameToArray(element);
 	for(i = 0, len = classNames.length; i < len; i++){
@@ -168,7 +169,9 @@ function removeClass = function(element,className){
 			break;
 		}
 	}
-	classNames.splice(pos,1);
+	if(pos > -1){
+		classNames.splice(pos,1);//处理bug	
+	}
 	element.className = classNames.join(" ");
 }
 function addClass = function(element,className){
@@ -489,8 +492,7 @@ function ajax(url,method,data,callback){
 
 /*
  * 获取选择的文本
- * textbox参数表示当前用户所选中的输入框
- * 
+ * textbox参数表示当前用户所选中的输入框 
  */
 function getSelectedText(textbox){
 	if(typeof textbox.selectionStart == 'number'){
@@ -498,6 +500,23 @@ function getSelectedText(textbox){
 	}else if(document.selection){
 		return document.selection.createRange().text;
 	}
+}/*
+
+ * 选择特定文本
+ * textbox参数表示要实现选择文本的输入框
+ * startIndex和stopIndex表示选择文本的开始位置和结束位置
+ */
+function selectText(textbox, startIndex, stopIndex){
+	if(textbox.setSelectionRange){
+		textbox.setSelectionRange(startIndex,stopIndex);
+	}else if(textbox.createTextRange){
+		var range = textbox.createTextRange();
+		range.collapse(true);
+		range.moveStart('character', startIndex);
+		range.moveEnd('character', stopIndex - startIndex);
+		range.select();
+	}
+	textbox.focus();
 }
 
 

@@ -24,7 +24,7 @@ function client () {
 		safari: 0,
 		konq: 0,
 		opera: 0,
-		chrome: 0
+		chrome: 0,
 
 		// 具体版本号
 		ver: null
@@ -85,7 +85,7 @@ function client () {
 	}else if(/KHTML\/(\S+)/.test(ua) || /Konqueror\/([^;]+)/.test(ua)){
 		engine.ver = browser.ver = RegExp['$1'];
 		engine.khtml = browser.konq = parseFloat(engine.ver);
-	}else if(/rv:([^\]+)\) Gecko\/\d{8}/.test(ua)){
+	}else if(/rv:([^]+)\) Gecko\/\d{8}/.test(ua)){
 		// 例如：rv:0.9.4) Gecko/20111128
 		engine.ver = RegExp['$1'];
 		browser.gecko = parseFloat(engine.ver);
@@ -178,6 +178,6 @@ function client () {
 		engine: engine,
 		browser: browser,
 		system: system
-	}
+	};
 	return obj;
 };

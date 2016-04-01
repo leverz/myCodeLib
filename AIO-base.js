@@ -116,8 +116,7 @@ function loadStyles(url){
  *eg: loadStyleString('body{background-color:red;}');
  */
 
-function loadStyleString = function (css) {
-	// body...
+var loadStyleString = function(css){
 	var style = document.createElement('style');
 	style.type = "text/css";
 	try{
@@ -159,7 +158,7 @@ function classNameToArray(element){
 	var className = element.className.split(/\s+/);
 	return className;
 }
-function removeClass = function(element,className){
+var removeClass = function(element,className){
 	//BUG:如果没有这个class，会直接删除最后一个class
 	var pos = -1,i,len;
 	var classNames = classNameToArray(element);
@@ -174,10 +173,10 @@ function removeClass = function(element,className){
 	}
 	element.className = classNames.join(" ");
 }
-function addClass = function(element,className){
+var addClass = function(element,className){
 	element.className += ' '+className;
 }
-function replaceClass = function(element,replaceClass,className){
+var replaceClass = function(element,replaceClass,className){
 	var classNames = classNameToArray(element);
 	var i,len;
 	for(i = 0, len = classNames.length; i < len; i++){
@@ -416,7 +415,7 @@ var EventUtil = {
 					return 1;
 			}
 		}
-	}，
+	},
 	getWheelDelta: function(event){
 		// 针对mousewheel事件
 		// event对象中有个wheelDelta属性

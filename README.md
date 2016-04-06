@@ -17,3 +17,6 @@
 14.异步获取数据方法----ajax<br/>
 15.获取选中文本的方法----getSelectedText<br/>
 16.选中特定文本----selectText
+17.获取select中的选中项----getSelectedOptions<br/>
+18.表单序列化----serialize
+#TODO:实现数组切片功能函数

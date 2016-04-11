@@ -164,6 +164,9 @@ function client () {
 		}
 	}
 
+	//判断是否是微信
+	var isWeChat = /micromessenger/.test(u.toLowerCase()) ? true : false;
+
 	// 检测Android版本
 	if(/Android (\d+\.\d+)/.test(ua)){
 		system.android = parseFloat(RegExp.$1);

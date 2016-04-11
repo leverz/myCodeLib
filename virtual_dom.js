@@ -190,6 +190,11 @@ function listDiff(oldList, newList, key) {
 	};
 
 	var simulateList = children.slice(0); //克隆数组
+	//simulateList中存放的,应该是
+	// 1.新子树中没有,旧子树中有key的节点==>意味着在新子树中被删除,所以直接置为null
+	// 2.没有在key值上进行变动的元素
+	// 3.没有key值得子树
+	//所以simulateList可以看做是旧子树的过滤版
 
 	i = 0;
 	while (i < simulateList.length){
@@ -206,7 +211,7 @@ function listDiff(oldList, newList, key) {
 
 	var j = i = 0;
 	while (i < newList.length){
-		item = newList[i];
+		item = newList[i];//变化后的模板
 		itemKey = getItemKey(item, key);
 
 		var simulateItem = simulateList[j];
@@ -214,18 +219,21 @@ function listDiff(oldList, newList, key) {
 
 		if (simulateItem){
 			if(itemKey === simulateItemKey){
-				j++;
+				j++;//正常的没有改动的情况
 			}else{
 				if(!oldKeyIndex.hasOwnProperty(itemKey)){
-					insert(i, item);
+					insert(i, item); //旧的没有,新的有,所以对应位置应该执行插入操作
 				}else{
 					var nextItemKey = getItemKey(simulateList[j + 1], key);
+					// 如果旧子树的下一个跟当前的key值相同,说明对旧子树进行了删除操作.
+					// 如果旧的有,新的也有,但是旧的位置跟新的位置差异很大,那么执行插入操作
 					if(nextItemKey === itemKey){
 						remove(i);
 						removeSimulate(j);
 						j++;
 					}else{
 						insert(i, item);
+						//注意这里j的值并没有改变,意味着,添加插入状态之后,新子树的后一个值需要继续跟当前的simulateList的值进行比对,这样做很合理.
 					}
 
 				}
@@ -258,6 +266,7 @@ function listDiff(oldList, newList, key) {
 		simulateList.splice(index,1);
 	}
 
+	//最后返回一个经过处理的旧模板children和一个需要进行改动操作的记录数组moves
 	return{
 		moves: moves,
 		children: children
@@ -355,6 +364,7 @@ function diffChildren(oldChildren, newChildren, index, patches, currentPatch) {
 	_.each(oldChildren, function (child, i) {
 		var newChild = newChildren[i];
 		currentNodeIndex = (leftNode && leftNode.count) ? currentNodeIndex + leftNode.count + 1 : currentNodeIndex + 1;
+		//深度优先遍历,指针同级后移,看不懂画棵深度优先遍历的树就明白了
 		dfsWalk(child, newChild, currentNodeIndex, patches);
 		leftNode = child;
 	})

@@ -184,3 +184,5 @@ function client () {
 	};
 	return obj;
 };
+
+module.exports = client;

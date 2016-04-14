@@ -1,3 +1,4 @@
+var client = require('./user_agent_test.js');
 /*
 	获取URL参数
  */

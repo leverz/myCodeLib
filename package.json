@@ -1,0 +1,31 @@
+{
+  "name": "Hello World",
+  "version": "0.0.1",
+  "author": "张三",
+  "description": "第一个node.js程序",
+  "keywords": [
+    "node.js",
+    "javascript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://path/to/url"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "contributors": [
+    {
+      "name": "Lever",
+      "email": "384094206@qq.com"
+    }
+  ],
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "webpack": "^1.12.15",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

@@ -651,6 +651,41 @@ _.setAttr = function (node, key, value) {
 			break;
 	}
 };
+//向url中添加参数的正确方式
+_.addQueryStringArg = function (url, name, value) {
+	if (url.indexOf('?') == -1){
+		url += '?';
+	}else{
+		url += '&';
+	}
+
+	url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+	return url;
+};
+
+//将JavaScript抛出的错误发送到服务端进行记录
+_.logError = function (sev, msg) {
+	var img = new Image();
+	img.src = "log.php?sev=" + encodeURIComponent(sev) + "&msg=" + encodeURIComponent(msg);
+};
+// 向控制台输出内容
+_.log = function (message) {
+	if(typeof console === "object"){
+		console.log(message);
+	}else if(typeof opera === "object"){
+		opera.postError(message);
+	}else if(typeof java === "object"){
+		java.lang.System.out.println(message);
+	}
+};
+// 不满足条件的抛出错误
+_.assert = function (condition, message) {
+	if(!condition){
+		throw new Error(message);
+	}
+};
+
+
 
 
 

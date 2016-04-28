@@ -685,6 +685,18 @@ _.assert = function (condition, message) {
 	}
 };
 
+// 函数节流
+_.throttle = function (fn, delay) {
+	var timer = null;
+	return function () {
+		var context = this;
+		var args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function () {
+			fn.apply(context,args);
+		}, delay);
+	};
+};
 
 
 

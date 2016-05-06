@@ -698,11 +698,36 @@ _.throttle = function (fn, delay) {
 	};
 };
 
+// 向url中添加参数
+_.addURLParam = function(url, name, value){
+	url += (url.indexOf("?") === -1 ? "?" : "&");
+	url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+	return url;
+};
 
-
-
-
-
+// 跨域请求解决方案(CORS之外的)
+/**
+ *
+ * @param url
+ * @param options
+ *
+ * options是个对象,可以添加success和error的回调函数
+ * 这种方式只适合浏览器向服务器发送数据的单向通信
+ * 这种方式只能发送get请求,并且无法获得相应文本
+ *
+ * 一般用于跟踪用户点击页面或动态广告的曝光次数
+ */
+_.pingImg = function (url,options) {
+	options = options || {};
+	var img = new Image();
+	img.onload = function () {
+		options.success && options.success();
+	};
+	img.onerror = function () {
+		options.error && options.error();
+	};
+	img.src = url;
+};
 
 
 

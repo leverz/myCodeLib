@@ -730,7 +730,36 @@ _.pingImg = function (url,options) {
 };
 
 
+/**
+ *
+ * @param fn
+ * @param context
+ * @returns {Function}
+ *
+ * 绑定作用域
+ */
+_.bind = function (fn, context){
+	var args = Array.prototype.slice.call(arguments, 2);
+	return function () {
+		var innerArgs = Array.prototype.slice.call(arguments);
+		var finalArgs = args.concat(innerArgs);
+		return fn.apply(context, finalArgs);
+	};
+};
 
+/**
+ * 函数柯里化
+ * @param fn
+ * @returns {Function}
+ */
+_.curry = function (fn) {
+	var args = Array.prototype.slice.call(arguments, 1); //第一次传入的参数
+	return function () {
+		var innerArgs = Array.prototype.slice.call(arguments); //第二次传入的参数
+		var finalArgs = args.concat(innerArgs);
+		return fn.apply(null, finalArgs);
+	}
+};
 
 
 

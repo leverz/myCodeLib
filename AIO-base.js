@@ -761,7 +761,23 @@ _.curry = function (fn) {
 	}
 };
 
+/**
+ * 数组分块
+ * 异步处理数组中的数据,但是忽略处理顺序
+ * @param array
+ * @param process
+ * @param context
+ */
+_.arrayChunk = function (array, process, context) {
+	setTimeout(function () {
+		var item = array.shift();
+		process.call(context, item);
 
+		if(array.length > 0){
+			setTimeout(arguments.callee, 100);
+		}
+	}, 100);
+};
 
 
 

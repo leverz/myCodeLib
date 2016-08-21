@@ -1,15 +1,15 @@
 {
-  "name": "Hello World",
+  "name": "Lever's code lib",
   "version": "0.0.1",
-  "author": "张三",
-  "description": "第一个node.js程序",
+  "author": "Lever",
+  "description": "Lever's code lib",
   "keywords": [
     "node.js",
     "javascript"
   ],
   "repository": {
     "type": "git",
-    "url": "https://path/to/url"
+    "url": "https://github.com/leverz"
   },
   "license": "MIT",
   "engines": {
@@ -25,6 +25,7 @@
     "start": "node index.js"
   },
   "devDependencies": {
+    "nodemailer": "^2.5.0",
     "webpack": "^1.12.15",
     "webpack-dev-server": "^1.14.1"
   }

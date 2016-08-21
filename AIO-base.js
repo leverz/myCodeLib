@@ -795,7 +795,7 @@ EventTarget.prototype = {
 			this.handlers[type] = [];
 		}
 
-		this.handlers[type].push(handler);
+		this.handlers[type].push(handler); //向handler中添加函数, 实现添加函数与触发函数分离.
 	},
 
 	fire: function (event) {
@@ -805,7 +805,7 @@ EventTarget.prototype = {
 		if (this.handlers[event.type] instanceof Array){
 			var handlers = this.handlers[event.type];
 			for(var i = 0, len = handlers.length; i < len; i++){
-				handlers[i](event);
+				handlers[i](event); //执行handlers中的函数
 			}
 		}
 	},
@@ -823,5 +823,94 @@ EventTarget.prototype = {
 	}
 };
 
+/**
+ * 判断传入的参数是否为dom元素节点
+ * @param node
+ * @returns Boolean
+ */
+_.isElement = function (node) {
+	if(node && (typeof HTMLElement === "function" || typeof HTMLElement === "object")){
+		return node instanceof HTMLElement;
+	}else{
+		return node && node.nodeType && node.nodeType === 1;
+	}
+};
 
+/**
+ * cookie相关操作方法
+ * @param name
+ * @returns {*}
+ */
+_.getCookie = function (name) {
+	var cookieName = encodeURIComponent(name) + "=",
+		cookieStart = document.cookie.indexOf(cookieName),
+		cookieValue = null;
 
+	if(cookieStart > -1){
+		var cookieEnd = document.cookie.indexOf(";", cookieStart);
+		if(cookieEnd === -1){
+			cookieEnd = document.cookie.length;
+		}
+		cookieValue = decodeURIComponent(document.cookie.substring(cookieStart + cookieName.length, cookieEnd));
+	}
+
+	return cookieValue;
+};
+
+_.setCookie = function (name, value, expires, path, domain, secure) {
+	var cookieText = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+	if(expires instanceof Date){
+		cookieText += "; expires=" + expires.toGMTString();
+	}
+
+	if(path){
+		cookieText += "; path=" + path;
+	}
+
+	if(domain){
+		cookieText += "; domain" + domain;
+	}
+
+	if(secure){
+		cookieText += "; secure";
+	}
+
+	document.cookie = cookieText;
+};
+
+_.unSetCookie = function (name, path, domain, secure) {
+	this.setCookie(name, "", new Date(0), path, domain, secure);
+};
+
+_.getSubCookie = function (name, subName) {
+	var subCookies = this.getAllSubCookie(name);
+	if(subCookies){
+		return subCookies[subName];
+	}else{
+		return null;
+	}
+};
+
+_.getAllSubCookie = function (name) {
+	var cookieName = encodeURIComponent(name) + "=",
+		cookieStart = document.cookie.indexOf(cookieName),
+		cookieValue = null,
+		cookieEnd,
+		subCookies,
+		i,
+		parts,
+		result = {};
+
+	if(cookieStart > -1){
+		cookieEnd = document.cookie.indexOf(";", cookieStart);
+		if(cookieEnd === -1){
+			cookieEnd = document.cookie.length;
+		}
+		cookieValue = document.cookie.substring(cookieStart + cookieName.length, cookieEnd);
+	}
+
+	if(cookieValue.length > 0){
+		subCookies
+	}
+}

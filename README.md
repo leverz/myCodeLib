@@ -20,4 +20,6 @@
 17.获取select中的选中项----getSelectedOptions<br/>
 18.表单序列化----serialize
 19.Virtual DOM的简单实现————virtual_dom.js
-#TODO:实现数组切片功能函数
+
+##新增shell
+readLine: 接受两个参数，第一个参数表示文件名及具体路径，第二个参数表示想要读取第几行，其实有相应的命令可以代替————sed，而且sed的效率会更高。

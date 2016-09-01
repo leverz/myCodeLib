@@ -614,6 +614,12 @@ _.isArray = function (list) {
 _.isString = function (list) {
 	return _.type(list) === 'String';
 };
+_.isDate = (date) => {
+	return _.type(date) === "Date";
+};
+_.isRegExp = (regExp) => {
+	return _.type(regExp) === "RegExp";
+};
 _.each = function (array, fn) {
 	for(var i = 0, len = array.length; i < len; i++){
 		fn(array[i],i);
@@ -913,4 +919,55 @@ _.getAllSubCookie = function (name) {
 	if(cookieValue.length > 0){
 		subCookies
 	}
+};
+
+/**
+ * 判断o1, o2是否相等
+ * 1.无论o1,o2是哪种类型的数据, 只要判断相等, 则返回值一定为true.(即使是对象也一样, 因为两个对象相等的情况只有引用相同的情况)
+ * 2.如果有一方是null,则直接判定为false,放在开头省去其余判断(由于在判断1中已经过滤掉相等的情况)
+ * 3.针对NaN情况的判断, 数据都为NaN时, js引擎的判断为不相等, 但这里我们理解为两个比较目标相等
+ * 4.针对不同类型进行特殊判断,判断类型是否相同,不同则直接返回false,相同,则:
+ *  - 4.1 o1类型为数组: 首先判断o2是否也是数组,如果是数组遍历二者判断是否值相等
+ *  - 4.2 o1和o2都是date类型,则通过getTime方法判断二者是否相等
+ *  - 4.3 o1和o2都是RegExp类型,通过toString的方式判断两者是否相等
+ *  - 4.4 o1和o2都是对象,对他们的属性进行遍历
+ *  - 4.5 防止o2中多余出来的属性
+ * @param {*} o1 比较目标o1
+ * @param {*} o2 比较目标o2
+ * @returns {Boolean} 若o1,o2相等则返回值为true, 否则返回false
+ */
+_.equals = (o1, o2) => {
+	if (o1 === o2) return true;
+	if (o1 === null || o2 === null) return false;
+	if (o1 !== o1 && o2 !== o2) return true; // NaN === NaN
+	const t1 = typeof o1, t2 = typeof o2;
+	let length, key, keySet;
+	if (t1 === t2 && t1 === 'object') {
+		if (_.isArray(o1)) {
+			if (!_.isArray(o2)) return false;
+			if ((length = o1.length) === o2.length) {
+				for (key = 0; key < length; key++) {
+					if (!_.equals(o1[key], o2[key])) return false;
+				}
+				return true;
+			}
+		} else if (_.isDate(o1)) {
+			if (!_.isDate(o2)) return false;
+			return _.equals(o1.getTime(), o2.getTime());
+		} else if (_.isRegExp(o1)) {
+			if (!_.isRegExp(o2)) return false;
+			return o1.toString() === o2.toString();
+		} else {
+			keySet = Object.create(null);
+			for (key in o1) {
+				if (!_.equals(o1[key], o2[key])) return false;
+				keySet[key] = true;
+			}
+			for (key in o2) {
+				if (!(key in keySet)) return false;
+			}
+			return true;
+		}
+	}
+	return false;
 }

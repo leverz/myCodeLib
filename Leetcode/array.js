@@ -14,3 +14,18 @@ var findPairs = function(nums, k) {
     }, {}), resultsKeyList = Object.keys(results);
     return k === 0 ? resultsKeyList.filter(key => results[key] !== true).length : resultsKeyList.filter(key => results[+key + k]).length;
 };
+
+/**
+ * 495. Teemo Attacking
+ * @param {number[]} timeSeries
+ * @param {number} duration
+ * @return {number}
+ */
+var findPoisonedDuration = function(timeSeries, duration) {
+    let len = timeSeries.length, count = duration * len;
+    return timeSeries.reduce((acc, time, index) => 
+        index === 0 ? 
+            acc : 
+            acc - Math.max(0, duration - (time - timeSeries[index - 1])), 
+    duration * timeSeries.length)
+};

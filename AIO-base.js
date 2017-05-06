@@ -971,3 +971,22 @@ _.equals = (o1, o2) => {
 	}
 	return false;
 }
+
+/**
+ * 缓存递归结果，优化重复递归的需求
+ * @param  {[Array]} memo    [description]
+ * @param  {[Function]} formula [description]
+ * @return {[Function]}         [description]
+ */
+_.memorizer = (memo, formula) => {
+	const recur = n => {
+		let result = memo[n];
+		if (result === undefined) {
+			result = formula(recur, n);
+		    memo[n] = result;
+		}
+		return result;
+	}
+
+	return recur;
+}

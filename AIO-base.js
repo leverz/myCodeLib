@@ -990,3 +990,5 @@ _.memorizer = (memo, formula) => {
 
 	return recur;
 }
+
+_.bind = (func, ctx, ...args) => (...childArgs) => func.apply(ctx, args.concat(childArgs));
